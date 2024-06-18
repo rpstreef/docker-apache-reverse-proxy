@@ -6,6 +6,38 @@ Docker compose example with Apache 2 as a reverse proxy
 `make down` to bring down all the containers.
 `dry` to monitor containers and access logs and tail them `f` easily.
 
+## Git access
+
+In the `Vagrantfile` at the top, please adjust:
+
+```shell
+ # Variables
+  git_user_email = 'youremail@mail.com'
+  git_user_name = 'gitusername'
+```
+
+Further down in the `Vagrantfile`, this line is executed to tell git to use the `store` credential helper.
+
+```
+git config --global credential.helper store
+```
+
+After the VM is installed with Vagrant, execute this on the commandline to set your `Personal access token` for GitHub.
+
+```shell
+git credential-store store <<EOF
+protocol=https
+host=github.com   # Replace with your Git provider's hostname
+username=<your-username>   # Replace with your Git username
+password=<personal-access-token>
+EOF
+```
+
+these are all stored in `cat ~/.git-credentials`
+
+Now you can freely `git push` without authentication requests.
+
+
 ## Makefile for quick access
 
 Enter `make' for this help list:

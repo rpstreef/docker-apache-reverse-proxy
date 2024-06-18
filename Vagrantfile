@@ -10,6 +10,10 @@ Vagrant.configure("2") do |config|
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
+  # Variables
+  git_user_email = 'youremail@mail.com'
+  git_user_name = 'gitusername'
+
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.define "docker-apache" do |docker-apache|
@@ -59,6 +63,11 @@ Vagrant.configure("2") do |config|
       sudo curl -L "https://github.com/docker/compose/releases/download/v2.27.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
       sudo chmod +x /usr/local/bin/docker-compose
       sudo usermod -aG docker vagrant 
+
+      # change to your email and user name.
+      git config --global user.email "#{git_user_email}"
+      git config --global user.name "#{git_user_name}"
+      git config --global credential.helper store
     SHELL
 
     # Run the containers, and register as service
