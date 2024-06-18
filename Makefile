@@ -14,10 +14,10 @@ remove:
 		vagrant destroy
 
 vm: 
-		$(shell ./scripts/ssh-and-start-vm.sh)
+		./scripts/ssh-and-start-vm.sh
 
 vm-stop: 
-		$(shell ./scripts/stop-vm.sh)
+		./scripts/stop-vm.sh
 
 help:
 	@echo '----'
