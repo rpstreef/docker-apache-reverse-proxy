@@ -1,0 +1,91 @@
+services:
+  gateway:
+    image: httpd:2.4
+    container_name: gateway
+    ports:
+      - "80:80"
+    volumes:
+      - ./apache-config/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./apache-config/extra/proxy-html.conf:/usr/local/apache2/conf/extra/proxy-html.conf
+    depends_on:
+      - frontend
+      - api
+      - redis
+      - redis-ui
+      - phpmyadmin
+    environment:
+      SERVER_NAME: ${APACHE_SERVER_NAME}
+
+  frontend:
+    image: php:7.4-apache
+    container_name: frontend
+    volumes:
+      - ./landing-page:/var/www/html
+    expose:
+      - "80"
+
+  api:
+    image: cylab/laravel-dev:8.1
+    user: "${UID}:${GID}"
+    container_name: api
+    volumes:
+      - ./api:/var/www/html
+    expose:
+      - "80"
+    environment:
+      WAIT_HOSTS: db:3306
+      APACHE_RUN_USER: "#${UID}"
+      APACHE_RUN_GROUP: "#${GID}"
+      APP_ENV: local
+      APP_DEBUG: true
+      APP_KEY: ${APP_KEY}
+      REDIS_HOST: redis
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_PORT: ${REDIS_PORT}
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - redis-data:/data
+
+  redis-ui:
+    image: rediscommander/redis-commander:latest
+    container_name: redis-ui
+    environment:
+      - REDIS_HOSTS=${REDIS_NAME}:${REDIS_HOST}:${REDIS_PORT}
+    expose:
+      - "8081"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_ABSOLUTE_URI: http://localhost/phpmyadmin/
+    expose:
+      - "80"
+
+  db:
+    image: mysql:5.7
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  redis-data:
+  db-data:

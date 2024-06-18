@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
   # via 127.0.0.1 to disable public access
-    config.vm.network "forwarded_port", guest: 7860, host: 7860
+    config.vm.network "forwarded_port", guest: 80, host: 80
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
     # documentation for more information about their specific syntax and use.
     config.vm.provision "shell", inline: <<-SHELL
       sudo apt-get update
-      sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common git
+      sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common git make composer php8.1-curl
       curl -sSf https://moncho.github.io/dry/dryup.sh | sudo sh
       sudo chmod 755 /usr/local/bin/dry
       curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -

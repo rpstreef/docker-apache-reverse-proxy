@@ -13,6 +13,12 @@ update:
 remove:
 		vagrant destroy
 
+up:
+		docker-compose up --build -d
+
+down:
+		docker-compose down
+
 vm: 
 		./scripts/ssh-and-start-vm.sh
 
@@ -26,3 +32,5 @@ help:
 	@echo 'make remove				- Remove this VirtualMachine'
 	@echo 'make vm					- Connect to VirtualBox via SSH and (if required) starts VirtualBox first'
 	@echo 'make vm-stop				- Stops VirtualBox'
+	@echo 'make up					- Docker containers build (if required) and up as a daemon (in the background)'
+	@echo 'make down				- Docker containers down'
