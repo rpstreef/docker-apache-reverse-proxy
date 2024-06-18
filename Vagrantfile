@@ -12,11 +12,11 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.define "docker-apache" do |langflow|
+  config.vm.define "docker-apache" do |docker-apache|
     config.vm.box = "generic/ubuntu2204"
 
     # copies the current folder to the VM
-    config.vm.synced_folder ".", "/home/vagrant/langflow"
+    # config.vm.synced_folder ".", "/home/vagrant/docker-apache"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
@@ -64,7 +64,10 @@ Vagrant.configure("2") do |config|
     # Run the containers, and register as service
     config.vm.provision "shell", inline: <<-SHELL
       sudo newgrp docker
+
       cd /home/vagrant/docker-apache
+      git clone https://github.com/rpstreef/docker-apache-reverse-proxy .
+
       docker-compose up -d
       sudo bash -c 'echo "[Unit]
       Description=Docker Compose Application Service
