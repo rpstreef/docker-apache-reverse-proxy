@@ -6,7 +6,6 @@ services:
       - "80:80"
     volumes:
       - ./apache-config/httpd.conf:/usr/local/apache2/conf/httpd.conf
-      - ./apache-config/extra/proxy-html.conf:/usr/local/apache2/conf/extra/proxy-html.conf
     depends_on:
       - frontend
       - api

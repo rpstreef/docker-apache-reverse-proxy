@@ -107,3 +107,24 @@ APACHE_RUN_GROUP: "#${GID}"
 
 Ensure `PMA_ABSOLUTE_URI` configuration matches the forwarding rule such that after login the path remains e.g. `localhost/phpmyadmin/index.php?`
 
+
+# Troubleshooting
+
+## Connectivity issues?
+
+In case you want to troubleshoot from a specific container, do the following:
+
+If it's the `gateway` container:
+
+```bash
+docker exec -it gateway bash
+apt-get update
+apt-get install -y curl iputils-ping
+```
+
+Now you can check the connectivity to other services with;
+
+```bash
+ping phpmyadmin
+curl -I http://phpmyadmin:80
+```
