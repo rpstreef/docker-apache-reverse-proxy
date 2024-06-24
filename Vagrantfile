@@ -74,9 +74,17 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", inline: <<-SHELL
       sudo newgrp docker
 
+      # clone repo
       cd /home/vagrant/docker-apache
       git clone https://github.com/rpstreef/docker-apache-reverse-proxy .
 
+      # install Laravel API:
+      mkdir api
+      cd ./api
+      composer config -g repo.packagist composer https://packagist.org
+      composer create-project --prefer-dist laravel/laravel .
+
+      # containers up and set service to run on boot:
       docker-compose up -d
       sudo bash -c 'echo "[Unit]
       Description=Docker Compose Application Service
