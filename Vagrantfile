@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.define "docker-apache" do |docker-apache|
+  config.vm.define "docker-apache" do |dockerApache|
     config.vm.box = "generic/ubuntu2204"
 
     # copies the current folder to the VM
@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
     # documentation for more information about their specific syntax and use.
     config.vm.provision "shell", inline: <<-SHELL
       sudo apt-get update
-      sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common git make composer php8.1-curl
+      sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common git make composer php8.1-curl php8.1-xml
       curl -sSf https://moncho.github.io/dry/dryup.sh | sudo sh
       sudo chmod 755 /usr/local/bin/dry
       curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -74,15 +74,19 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", inline: <<-SHELL
       sudo newgrp docker
 
-      # clone repo
-      cd /home/vagrant/docker-apache
-      git clone https://github.com/rpstreef/docker-apache-reverse-proxy .
+      # Switch to vagrant user for clone and Laravel installation
+      su - vagrant << EOF
+        # clone repo
+        mkdir -p /home/vagrant/docker-apache
+        cd /home/vagrant/docker-apache
+        git clone https://github.com/rpstreef/docker-apache-reverse-proxy .
 
-      # install Laravel API:
-      mkdir api
-      cd ./api
-      composer config -g repo.packagist composer https://packagist.org
-      composer create-project --prefer-dist laravel/laravel .
+        # install Laravel API:
+        mkdir api
+        cd ./api
+        composer config -g repo.packagist composer https://packagist.org
+        composer create-project --prefer-dist laravel/laravel .
+      EOF
 
       # containers up and set service to run on boot:
       docker-compose up -d
