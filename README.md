@@ -2,11 +2,18 @@
 
 Docker compose example with Apache 2 as a reverse proxy 
 
-`make up` to build and run all the containers.
-`make down` to bring down all the containers.
-`dry` to monitor containers and access logs and tail them `f` easily.
+## Pre-Requisites:
 
-## Git access
+1. Install Vagrant using [these](https://developer.hashicorp.com/vagrant/docs/installation) instructions
+2. Install VirtualBox using [these](https://www.virtualbox.org/wiki/Downloads) instructions.
+
+## Install:
+
+1. `make install` to install with Vagrant to VirtualBox.
+2. Once installed, connect with `make vm`. If password is requested, enter: `vagrant`
+3. `dry` to monitor containers and access logs and tail them `f` easily.
+
+## Git access on the VM
 
 In the `Vagrantfile` at the top, please adjust:
 
@@ -54,7 +61,9 @@ Enter `make' for this help list:
 
 ## .env files for configuration
 
-Create an `.env` file in the root directory of this git repo, and all your configuration:
+Normally, you would not commit the `.env` file due to passwords etc. 
+
+This project requires the follwing configuration in the root directory of this git repo:
 
 ```bash
 # MySQL
