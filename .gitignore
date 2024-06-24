@@ -1,3 +1,4 @@
-.env
+# Normally, do not commit the .env
+# .env
 .vagrant
 api
