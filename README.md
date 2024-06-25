@@ -1,17 +1,55 @@
-# Docker compose with Apache 2 Reverse Proxy
+# Flexible Development Environment
 
-Docker compose example with Apache 2 as a reverse proxy 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Pre-Requisites:
+A versatile, fully automated virtualized development environment. This setup leverages Vagrant, VirtualBox, and Docker to create a consistent, easily reproducible, and highly adaptable development infrastructure.
 
-1. Install Vagrant using [these](https://developer.hashicorp.com/vagrant/docs/installation) instructions
-2. Install VirtualBox using [these](https://www.virtualbox.org/wiki/Downloads) instructions.
+> See this article for more details and an explanation.
 
-## Install:
+## Features
 
-1. `vagrant up` to install with Vagrant to VirtualBox.
-2. Once installed, connect with `vagrant ssh`.
-3. `dry` to monitor containers and access logs and tail them pressing `f` easily.
+- **Flexible Infrastructure**: Easily customizable for various tech stacks
+- **Fully Automated Setup**: Get up and running with a single command
+- **Virtualized Environment**: Runs on VirtualBox, managed by Vagrant
+- **Containerized Services**: Uses Docker Compose for easy service management and scalability
+
+### Example Configuration
+
+This repository includes an example setup for a PHP/Laravel environment, demonstrating how to configure:
+
+- Apache as a Gateway
+- PHP with Apache for front-end
+- Laravel API
+- Redis Cache with Redis Commander
+- MySQL database with PHPMyAdmin
+
+However, the infrastructure is designed to be easily adapted for other tech stacks and services.
+
+## Prerequisites
+
+- [VirtualBox](https://www.virtualbox.org/)
+- [Vagrant](https://www.vagrantup.com/)
+- [Git](https://git-scm.com/)
+
+## Quick Start
+1. Clone this repository: git clone https://github.com/yourusername/flexible-dev-environment.git
+2. Navigate to the project directory: cd flexible-dev-environment
+3. Start the Vagrant environment: `vagrant up` to install with Vagrant to VirtualBox.
+4. Select network card with internet access.
+5. Once installed, connect with `vagrant ssh`, for ssh access.
+6. Type `ip address` take note of the <ip address> for your network card.
+7. Now you can access your services via the browser with your <ip address> (using the PHP/Laravel as example):
+- Front-end: `http://<ip address>/`
+- API: `http://<ip address>/api/`
+- Redis Commander: `http://<ip address>/cache/`
+- PHPMyAdmin: `http://<ip address>/phpmyadmin/`
+
+## Customizing Your Environment
+
+This setup can be easily adapted for different tech stacks:
+
+1. Modify the `docker-compose.yml` file to include your required services
+2. Update the `Vagrantfile` if you need to change VM configurations and Ubuntu installations and dependencies.
 
 ## (Optional) Makefile for quick access
 
@@ -71,7 +109,6 @@ APACHE_RUN_GROUP: "#${GID}"
 
 Ensure `PMA_ABSOLUTE_URI` configuration matches the forwarding rule such that after login the path remains e.g. `localhost/phpmyadmin/index.php?`
 
-
 # Troubleshooting
 
 ## Connectivity issues?
@@ -92,3 +129,11 @@ Now you can check the connectivity to other services with;
 ping phpmyadmin
 curl -I http://phpmyadmin:80
 ```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
