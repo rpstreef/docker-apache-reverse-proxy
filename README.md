@@ -9,43 +9,11 @@ Docker compose example with Apache 2 as a reverse proxy
 
 ## Install:
 
-1. `make install` to install with Vagrant to VirtualBox.
-2. Once installed, connect with `make vm`. If password is requested, enter: `vagrant`
-3. `dry` to monitor containers and access logs and tail them `f` easily.
+1. `vagrant up` to install with Vagrant to VirtualBox.
+2. Once installed, connect with `vagrant ssh`.
+3. `dry` to monitor containers and access logs and tail them pressing `f` easily.
 
-## Git access on the VM
-
-In the `Vagrantfile` at the top, please adjust:
-
-```shell
- # Variables
-  git_user_email = 'youremail@mail.com'
-  git_user_name = 'gitusername'
-```
-
-Further down in the `Vagrantfile`, this line is executed to tell git to use the `store` credential helper.
-
-```
-git config --global credential.helper store
-```
-
-After the VM is installed with Vagrant, execute this on the commandline to set your `Personal access token` for GitHub.
-
-```shell
-git credential-store store <<EOF
-protocol=https
-host=github.com   # Replace with your Git provider's hostname
-username=<your-username>   # Replace with your Git username
-password=<personal-access-token>
-EOF
-```
-
-these are all stored in `cat ~/.git-credentials`
-
-Now you can freely `git push` without authentication requests.
-
-
-## Makefile for quick access
+## (Optional) Makefile for quick access
 
 Enter `make' for this help list:
 
@@ -58,6 +26,8 @@ Enter `make' for this help list:
 @echo 'make up					- Docker containers build (if required) and up as a daemon (in the background)'
 @echo 'make down				- Docker containers down'
 ```
+
+# A few notes about this setup
 
 ## .env files for configuration
 
@@ -86,22 +56,7 @@ UID=1000
 GID=1000
 ```
 
-## Create basic laravel test app:
-
-Force composer to use SSL: `composer config -g repo.packagist composer https://packagist.org` 
-
-Ensure you have PHP Curl installed, this could prevent downloading from packagist: `sudo apt install php8.1-curl`
-
-Run in `./api`: `composer create-project --prefer-dist laravel/laravel .`
-
-The configuration default should be changed after you've created a database technical user:
-
-```shell
-DB_USERNAME: root
-DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-```
-
-### Host machine user and group id
+## Host machine user and group id
 
 Ensure the API Laravel service runs on the same user id and group id as your host system!
 
