@@ -4,7 +4,7 @@
 
 A versatile, fully automated virtualized development environment. This setup leverages Vagrant, VirtualBox, and Docker to create a consistent, easily reproducible, and highly adaptable development infrastructure.
 
-> See this article for more details and an explanation.
+> See this [article](https://rolfstreefkerk.com/article/how-to-create-a-flexible-dev-environment-with-vagrant-and-docker) for more details and a full walkthrough of this setup.
 
 ## Features
 
