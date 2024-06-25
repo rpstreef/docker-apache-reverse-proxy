@@ -1,6 +1,6 @@
 # Flexible Development Environment
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache 2](https://img.shields.io/github/license/saltstack/salt)](https://opensource.org/license/apache-2-0)
 
 A versatile, fully automated virtualized development environment. This setup leverages Vagrant, VirtualBox, and Docker to create a consistent, easily reproducible, and highly adaptable development infrastructure.
 
@@ -136,4 +136,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
